@@ -1,7 +1,8 @@
-package com.example.paymentsapp
+package com.example.paymentsapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.paymentsapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
