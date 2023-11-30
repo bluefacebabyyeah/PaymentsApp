@@ -1,5 +1,5 @@
 package com.example.domain.models
 
-class AuthResult(
+data class AuthResult(
     val user: User?
 )

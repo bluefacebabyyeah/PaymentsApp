@@ -17,19 +17,29 @@ class AuthorizationViewModel @Inject constructor(
     private val logInUseCase: LogInUseCase,
     private val checkAuthUseCase: CheckAuthUseCase
 ) : ViewModel(){
-    val user = MutableLiveData<User?>()
-    val authorization = MutableLiveData<AuthResult>()
-    val error = MutableLiveData<String?>()
 
+    val authorized = MutableLiveData<Boolean>()
+    val loading = MutableLiveData<Boolean>(false)
+    val error = MutableLiveData<String?>()
     fun logIn(authArgs: AuthArgs){
         viewModelScope.launch {
-            //TODO
+            loading.value = true
+            try {
+                val result = logInUseCase.logIn(authArgs)
+                authorized.value = result.user != null
+                if (result.user == null)
+                    error.value = "Incorrect credentials"
+            } catch (e: Exception) {
+                e.printStackTrace()
+                error.value = "Unknown error has occurred"
+            }
+            loading.value = false
         }
     }
 
-    fun checkAuth(authResult: AuthResult){
+    fun checkAuth(){
         viewModelScope.launch {
-            //TODO
+            authorized.value = checkAuthUseCase.checkAuth()
         }
     }
 }
